@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { Schema } = mongoose
+const  Schema  = mongoose.Schema
 
 const clienteSchema = new Schema({
     electrodomestico: { type: Schema.Types.Mixed, required: true },

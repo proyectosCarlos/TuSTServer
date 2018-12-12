@@ -70,7 +70,7 @@ clienteController.obtenerPedientes = async(req, res)=>{
            res.status(401).send('El tiempo de garantia ha Caducado')           
         }else{ 
 
-        const { id } = req.params
+        const  id  = req.params.id
         const clienteNuevo = {           
 
             electrodomestico: req.body.electrodomestico,
@@ -209,7 +209,7 @@ clienteController.obtenerClientesTecnico = async(req, res)=>{
 
 
         clienteController.editarClienteFacturacion = (req, res)=>{
-            const { id } = req.params
+            const  id  = req.params.id
             clienteModel.findOneAndUpdate(
                 {
                   _id: id  // search query
