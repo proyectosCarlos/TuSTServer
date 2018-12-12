@@ -7,7 +7,7 @@ const clienteController = {}
 clienteController.crearCliente= (req, res)=>{   
     try {
         const cliente = new clienteModel(req.body)
-        await cliente.save()
+         cliente.save()
         res.json({
             "status": "201"
         })

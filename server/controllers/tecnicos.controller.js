@@ -125,7 +125,7 @@ tecnicoController.obtenerTecnicos = (req, res)=>{
                 estado:  req.body.estado, 
                 rol:  req.body.rol, 
             }
-           await tecnicoModel.findByIdAndUpdate(id, {$set: tecnicoNuevo}, {new: true})
+            tecnicoModel.findByIdAndUpdate(id, {$set: tecnicoNuevo}, {new: true})
             //se agrega el new true para que en caso de que no exista lo cree
             res.status(200).send('Tecnico activado')
         }

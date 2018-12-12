@@ -18,13 +18,13 @@ imageController.crearImagen=  (req, res)=>{
       
 }
 
-imageController.obtenerImagenes = async(req, res)=>{
+imageController.obtenerImagenes = (req, res)=>{
 
     try {
         const start = req.params.dateDesde
         const end = req.params.dateHasta
         console.log(start +" - "+end)
-        const imagenes = await imageModel.find({$and : [{fechaCreacion : {$gte : start}}, {fechaCreacion: {$lte : end}}]})
+        const imagenes =  imageModel.find({$and : [{fechaCreacion : {$gte : start}}, {fechaCreacion: {$lte : end}}]})
         res.status(200).send(imagenes)    
         
     } catch (error) {
