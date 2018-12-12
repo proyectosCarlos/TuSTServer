@@ -64,23 +64,23 @@ tecnicoController.crearTecnico= (req, res)=>{
 
 
 
-tecnicoController.obtenerTecnicos = async(req, res)=>{
+tecnicoController.obtenerTecnicos = (req, res)=>{
     //todos los clientes
-    const tecnicos = await tecnicoModel.find({rol:'0'})
+    const tecnicos =  tecnicoModel.find({rol:'0'})
     res.json(tecnicos)
     }
 
 
-    tecnicoController.obtenerTecnico= async (req, res)=>{       
-        const tecnico = await tecnicoModel.findById(req.params.id)
+    tecnicoController.obtenerTecnico=  (req, res)=>{       
+        const tecnico =  tecnicoModel.findById(req.params.id)
         res.json({nombreTecnico: tecnico.nombreTecnico, apellidoTecnico:tecnico.apellidoTecnico, telefonoTecnico:tecnico.telefonoTecnico})
        }
 
 
 
-       tecnicoController.login = async(req, res)=>{
+       tecnicoController.login = (req, res)=>{
         let userData = req.body       
-       await tecnicoModel.findOne({correoTecnico: userData.correoTecnico} , (error, user)=>{
+        tecnicoModel.findOne({correoTecnico: userData.correoTecnico} , (error, user)=>{
             if(error){
                 console.log(error)
             }else{
@@ -108,7 +108,7 @@ tecnicoController.obtenerTecnicos = async(req, res)=>{
         }
 
 
-        tecnicoController.editarTecnico = async (req, res)=>{
+        tecnicoController.editarTecnico =  (req, res)=>{
             const  id  = req.params.id
             const tecnicoNuevo = {           
 

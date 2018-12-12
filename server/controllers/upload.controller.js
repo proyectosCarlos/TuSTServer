@@ -5,10 +5,10 @@ const imageModel = require ('../models/imagen')
 
 const imageController = {}
 
-imageController.crearImagen= async (req, res)=>{   
+imageController.crearImagen=  (req, res)=>{   
     try {
         const imagen = new imageModel(req.body)
-        await imagen.save()
+         imagen.save()
         res.status(200).send('bien')    
         
     } catch (error) {

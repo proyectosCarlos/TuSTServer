@@ -4,7 +4,7 @@ const moment = require('moment');
 const clienteController = {}
 
 
-clienteController.crearCliente= async (req, res)=>{   
+clienteController.crearCliente= (req, res)=>{   
     try {
         const cliente = new clienteModel(req.body)
         await cliente.save()
@@ -23,25 +23,25 @@ clienteController.crearCliente= async (req, res)=>{
 }
 
 
-clienteController.obtenerClientes = async(req, res)=>{
+clienteController.obtenerClientes = (req, res)=>{
     //todos los clientes
-    const clientes = await clienteModel.find({estado:"1"})
+    const clientes =  clienteModel.find({estado:"1"})
     res.json(clientes)
     }
 
-clienteController.obtenerGarantias = async(req, res)=>{
+clienteController.obtenerGarantias = (req, res)=>{
     //todos los clientes
-    const garantias = await clienteModel.find({estado:"2"})
+    const garantias =  clienteModel.find({estado:"2"})
     res.json(garantias)
     }
 
-clienteController.obtenerPedientes = async(req, res)=>{
+clienteController.obtenerPedientes = (req, res)=>{
     //todos los clientes
-    const pendientes = await clienteModel.find({estado:"0"})
+    const pendientes =  clienteModel.find({estado:"0"})
     res.json(pendientes)
     }   
 
-    clienteController.editarCliente = async (req, res)=>{   
+    clienteController.editarCliente =  (req, res)=>{   
         let DiasGarantia = 40
         //let fecha = moment(1541027102867.0).format("DD/MM/YYYY"); 
        // let fecha = moment(1541027102867.0).format('LLLL')  
@@ -89,7 +89,7 @@ clienteController.obtenerPedientes = async(req, res)=>{
             estado: req.body.estado,
             valor: req.body.valor
         }
-        await clienteModel.findByIdAndUpdate(id, {$set: clienteNuevo}, {new: true})
+         clienteModel.findByIdAndUpdate(id, {$set: clienteNuevo}, {new: true})
        // se agrega el new true para que en caso de que no exista lo cree
         res.status(200).send('bien')         
        } 
@@ -97,12 +97,12 @@ clienteController.obtenerPedientes = async(req, res)=>{
 
 
 //Obtener listado de clientes por año para grafica administrador
-    clienteController.obtenerClientesAnio= async(req, res)=>{
+    clienteController.obtenerClientesAnio= (req, res)=>{
         
         try {
             const y = parseInt(req.params.year)  
        
-            const clientes = await clienteModel.find({"fecha.year": y})
+            const clientes =  clienteModel.find({"fecha.year": y})
                    
             res.status(200).json(clientes)
             
@@ -114,13 +114,13 @@ clienteController.obtenerPedientes = async(req, res)=>{
 
 
       //Obtener clientes para grafica tecnicos por año
-   clienteController.obtenerClientesAnioTecnico= async(req, res)=>{
+   clienteController.obtenerClientesAnioTecnico= (req, res)=>{
             
             try {
                 const  id = req.params.id
                 const y = parseInt(req.params.year)  
            
-               const clientes = await clienteModel.find({$and:[{tecnico: id},{"fecha.year": y}]})
+               const clientes =  clienteModel.find({$and:[{tecnico: id},{"fecha.year": y}]})
                
                        
                 res.status(200).json(clientes)
@@ -131,13 +131,13 @@ clienteController.obtenerPedientes = async(req, res)=>{
     }
 
     //metodo para obtener la facturacion total de los clientes por año y mes
-    clienteController.obtenerClientesFacturacion= async(req, res)=>{            
+    clienteController.obtenerClientesFacturacion= (req, res)=>{            
         try {
             //y es año y m es mes 
             const y = parseInt(req.params.year)  
             const m = parseInt(req.params.month)  
 
-            const factura = await clienteModel.aggregate([
+            const factura =  clienteModel.aggregate([
                 { $match:{$and:[{"fecha.month": m},{"fecha.year": y}]}},                
                 {$group : {_id : "$by_user", total : {$sum : "$valor"}}}])
 
@@ -149,14 +149,14 @@ clienteController.obtenerPedientes = async(req, res)=>{
 }
 
 //metodo para obtener la facturacion total de los clientes por año y mes de cada tecnico
-clienteController.obtenerClientesFacturacionTecnico= async(req, res)=>{            
+clienteController.obtenerClientesFacturacionTecnico= (req, res)=>{            
     try {
         //y es año y m es mes 
         const id = req.params.id
         const y = parseInt(req.params.year)  
         const m = parseInt(req.params.month)
 
-        const factura = await clienteModel.aggregate([
+        const factura =  clienteModel.aggregate([
             { $match:{$and:[{tecnico: id},{"fecha.month": m},{"fecha.year": y} ]}},                
             {$group : {_id : "$by_user", total : {$sum : "$valor"}}}])
 
@@ -171,11 +171,11 @@ clienteController.obtenerClientesFacturacionTecnico= async(req, res)=>{
 
 //metodos busqueda de clientes para el perfil del tecnico 
 
-clienteController.obtenerClientesTecnico = async(req, res)=>{
+clienteController.obtenerClientesTecnico = (req, res)=>{
     //todos los clientes
     try {
         const id = req.params.id      
-       const clientes = await clienteModel.find( {$and: [{estado:"1"}, {tecnico: id }]})
+       const clientes =  clienteModel.find( {$and: [{estado:"1"}, {tecnico: id }]})
        res.json(clientes)
     } catch (error) {
         console.log(error)
@@ -183,11 +183,11 @@ clienteController.obtenerClientesTecnico = async(req, res)=>{
 
     }
 
-    clienteController.obtenerGarantiasTecnico = async(req, res)=>{
+    clienteController.obtenerGarantiasTecnico = (req, res)=>{
         //todos los clientes
         try {
             const id = req.params.id   
-            const garantias = await clienteModel.find( {$and: [{estado:"2"}, {tecnico: id }]})
+            const garantias =  clienteModel.find( {$and: [{estado:"2"}, {tecnico: id }]})
             res.json(garantias)
         } catch (error) {
             console.log(error)
@@ -195,11 +195,11 @@ clienteController.obtenerClientesTecnico = async(req, res)=>{
       
         }
     
-    clienteController.obtenerPedientesTecnico = async(req, res)=>{
+    clienteController.obtenerPedientesTecnico = (req, res)=>{
         //todos los clientes
         try {
             const id = req.params.id   
-            const pendientes = await clienteModel.find( {$and: [{estado:"0"}, {tecnico: id }]})
+            const pendientes =  clienteModel.find( {$and: [{estado:"0"}, {tecnico: id }]})
             res.json(pendientes)
         } catch (error) {
             console.log(error)
