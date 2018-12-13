@@ -24,5 +24,5 @@ app.use('/api/tuservicio' ,require('./routes/image.routes'))
 
 //start
 app.listen(app.get('port'), ()=>{
-    console.log('corriendo en el puesto 3000 ')
+    console.log(`running port ${app.get('port')}`)
         })
