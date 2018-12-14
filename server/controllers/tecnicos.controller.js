@@ -64,23 +64,23 @@ tecnicoController.crearTecnico= (req, res)=>{
 
 
 
-tecnicoController.obtenerTecnicos = (req, res)=>{
+tecnicoController.obtenerTecnicos = async(req, res)=>{
     //todos los clientes
-    const tecnicos =  tecnicoModel.find({rol:'0'})
+    const tecnicos = await tecnicoModel.find({rol:'0'})
     res.json(tecnicos)
     }
 
 
-    tecnicoController.obtenerTecnico=  (req, res)=>{       
-        const tecnico =  tecnicoModel.findById(req.params.id)
+    tecnicoController.obtenerTecnico= async (req, res)=>{       
+        const tecnico = await tecnicoModel.findById(req.params.id)
         res.json({nombreTecnico: tecnico.nombreTecnico, apellidoTecnico:tecnico.apellidoTecnico, telefonoTecnico:tecnico.telefonoTecnico})
        }
 
 
 
-       tecnicoController.login = (req, res)=>{
+       tecnicoController.login = async(req, res)=>{
         let userData = req.body       
-        tecnicoModel.findOne({correoTecnico: userData.correoTecnico} , (error, user)=>{
+       await tecnicoModel.findOne({correoTecnico: userData.correoTecnico} , (error, user)=>{
             if(error){
                 console.log(error)
             }else{
@@ -108,8 +108,8 @@ tecnicoController.obtenerTecnicos = (req, res)=>{
         }
 
 
-        tecnicoController.editarTecnico =  (req, res)=>{
-            const  id  = req.params.id
+        tecnicoController.editarTecnico = async (req, res)=>{
+            const { id } = req.params
             const tecnicoNuevo = {           
 
                 nombreTecnico: req.body.nombreTecnico,  
@@ -125,7 +125,7 @@ tecnicoController.obtenerTecnicos = (req, res)=>{
                 estado:  req.body.estado, 
                 rol:  req.body.rol, 
             }
-            tecnicoModel.findByIdAndUpdate(id, {$set: tecnicoNuevo}, {new: true})
+           await tecnicoModel.findByIdAndUpdate(id, {$set: tecnicoNuevo}, {new: true})
             //se agrega el new true para que en caso de que no exista lo cree
             res.status(200).send('Tecnico activado')
         }

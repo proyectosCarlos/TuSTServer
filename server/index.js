@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const { mongoose } = require('./database') 
 const cors = require('cors')
 
 
@@ -24,5 +25,5 @@ app.use('/api/tuservicio' ,require('./routes/image.routes'))
 
 //start
 app.listen(app.get('port'), ()=>{
-    console.log(`running port ${app.get('port')}`)
+    console.log('corriendo en el puesto 3000 ')
         })
