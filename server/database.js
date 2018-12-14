@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
-const URI = 'mongodb://localhost/tus3rviciot';
+const URI = 'mongodb://localhost:27017/tus3rviciot';
 
 mongoose.connect(URI, { useNewUrlParser: true })
     .then(db => console.log('db  esta conectada'))
